@@ -1,0 +1,50 @@
+---
+layout: "@/layouts/BlogPost"
+title: 為什麼想成為前端工程師?
+publishDate: 24 Oct 2022
+description: Why frontend ?
+tags: ["frontend", "react", "blog"]
+---
+
+import { Image } from "@astrojs/image/components";
+
+## 我喜歡跟使用者互動
+
+前端與後端不同，前端是最直接影響使用者的體驗的地方，可惜的是，台灣重視使用者體驗的網站在我看來並不多，有很多網站的使用者體驗非常地差勁，我做過東京都、紐約市、台北市政府的網站比較，很明顯前兩者的網站設計是比台北市要好上許多，在互聯網時代，前端設計以及架構已不可或缺。
+
+<Image
+	src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+	alt="A covered up pug in the woods"
+	width={550}
+	height={400}
+/>
+
+## React 實在太有趣了
+
+舉例來說
+
+```js
+const [tenzies, setTenzies] = React.useState(false)
+
+ useEffect(() => {
+    let firsValue = dice[0].value;
+    const allDiceHeld = dice.every((die) => die.isHeld);
+    const allSameValue = dice.every((die) => die.value === firsValue);
+    if (allDiceHeld && allSameValue) {
+      setTenzies(true);
+      handleBestCount();
+    }
+    //eslint-disable-next-line
+  }, [dice]);
+return (
+{tenzies && <Confetti />}
+)
+
+```
+
+舉我在 scrimba 上開發過的[骰子遊戲](https://tenzies-scrimba.netlify.app/)來說，我真的很喜歡這種 State 的語法，不但可以讓工程師一眼看出初始值是 false，也可以馬上知道 setState 的時候，程式碼會把 tenzies 的狀態轉為 true，
+詳細程式碼可以看[這裡](https://github.com/evanyang0612/tenzies)，如果在遊戲上或語法上有任何可以改善的地方請跟我說。<br/><br/>另外最後的 conditional rendering(條件渲染) 搭配 component(組件) 這種語法我也是非常喜歡，因為實在是既乾淨又簡潔，你又怎能不愛上 functional programming 呢?
+
+## 總結
+
+目前框架的部分還只有學習 React 的基本語法，對於 Redux 的掌握度需要再提升，不過目前還沒有需要用到 Redux 的大型專案產生，也希望這篇文章能夠帶給大家一些啟發。我要繼續去玩 React 了。

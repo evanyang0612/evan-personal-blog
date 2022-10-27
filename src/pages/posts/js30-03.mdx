@@ -1,0 +1,95 @@
+---
+layout: "@/layouts/BlogPost"
+title: JS 30 challenge - 03 心得
+publishDate: 28 Oct 2022
+description: CSS Variables
+tags: ["JavaScript", "practice", "CSS"]
+---
+
+import { Image } from "@astrojs/image/components";
+
+## Demo & Github
+
+[[DEMO]](https://evan-css-variables.netlify.app/)
+[[Github]](https://github.com/evanyang0612/03-CSS-VARIABLES)
+
+### dataset
+
+```html
+<div class="controls">
+	<label for="spacing">Spacing:</label>
+	<input
+		id="spacing"
+		type="range"
+		name="spacing"
+		min="10"
+		max="200"
+		value="10"
+		data-sizing="px"
+	/>
+
+	<label for="base">Base Color</label>
+	<input id="base" type="color" name="base" value="#ffc600" data-sizing="" />
+</div>
+```
+
+```js
+function handleUpdate() {
+	const suffix = this.dataset.sizing;
+	document.documentElement.style.setProperty(
+		`--${this.name}`,
+		this.value + suffix
+	);
+	console.log(this.name);
+}
+```
+
+用 `dataset` 可以取出對象的`data-*`屬性，同樣也可以用`getAttribute`來達到同等效果，也就是
+
+```js
+getAttribute("data-sizing");
+```
+
+另外最後的 Base Color 設為 empty string("")是為了避免產生錯誤。
+
+### style.setProperty()
+
+等同於 style.cssPropertyName
+
+```css
+style.setProperty('padding', '15px');
+/* 等同於 */
+style.padding = '15px';
+```
+
+### 新增功能 - grayscale()
+
+```html
+<label for="blur">Grayscale:</label>
+<input
+	id="grayscale"
+	type="range"
+	name="grayscale"
+	min="0"
+	max="100"
+	value="0"
+	data-sizing="%"
+/>
+```
+
+```css
+:root {
+	--base: #ffc600;
+	--spacing: 10px;
+	--blur: 10px;
+	--grayscale: 0%;
+}
+
+img {
+	padding: var(--spacing);
+	background: var(--base);
+	filter: blur(var(--blur)) grayscale(var(--grayscale));
+}
+```
+
+由於 grayscale()的參數是從 0-100%，因此 min, max, value 以及 data-sizing 都需做調整。

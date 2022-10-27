@@ -1,0 +1,80 @@
+---
+layout: "@/layouts/BlogPost"
+title: Factory Function
+publishDate: 26 Oct 2022
+description: Factory function vs class
+tags: ["JavaScript"]
+---
+
+import { Image } from "@astrojs/image/components";
+
+## 前言
+
+Factory function 是 用來產生 object 的 function ，這篇文章拿 Factory function 與 class 做比較。
+以下先看看 Class 的實例。
+
+## Class
+
+```js
+class Dog {
+	constructor() {
+		this.sound = "woof";
+	}
+	talk() {
+		console.log(this.sound);
+	}
+}
+
+const sniffles = new Dog();
+sniffles.talk(); // Outputs: "woof"
+```
+
+一切看起來沒問題，是吧?
+
+但此時如果新增了一個按鈕來啟動讓 sniffles 啟動呢?
+
+```js
+$("button.myButton").click(sniffles.talk);
+```
+
+上面的 this 不會指向 sniffles，因此必須要另外綁定才行
+
+```js
+$("button.myButton").click(sniffles.talk.bind(sniffles));
+```
+
+或是寫成這樣
+
+```js
+${'button.myButton'}.click( _ => siffles.talk())
+```
+
+作者認為 new 跟 this 在 JS 裡面是很不直觀的，而你可以這樣寫。
+
+## Factory Function
+
+```js
+const dog = () => {
+	const sound = "woof";
+	return {
+		talk: () => console.log(sound),
+	};
+};
+const sniffles = dog();
+sniffles.talk(); // Outputs : "woof"
+```
+
+看起來是不是乾淨許多呢?
+請注意，這邊有運用到閉包的概念(closure)，因為有了閉包，talk 在運行的時候才有辦法知道 sound 是什麼。
+
+```js
+${'button.myButton'}.click(sniffles.talk)
+```
+
+event 的部分可以這樣寫。
+
+## 總結
+
+以 factory function 取代 class 可以讓你的程式碼更簡單，更乾淨，也更易讀。
+
+> 參考：[Factory function in JavaScript](https://www.youtube.com/watch?v=ImwrezYhw4w&ab_channel=FunFunFunction)

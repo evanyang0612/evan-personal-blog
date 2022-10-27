@@ -1,0 +1,84 @@
+---
+layout: "@/layouts/BlogPost"
+title: JS 30 challenge - 02 心得
+publishDate: 27 Oct 2022
+description: Clock
+tags: ["JavaScript", "practice", "CSS"]
+---
+
+import { Image } from "@astrojs/image/components";
+
+## Demo & Github
+
+[[DEMO]](https://evan-js-and-css-clock.netlify.app/)  
+[[Github]](https://github.com/evanyang0612/02---JS-and-CSS-Clock)
+
+### transform:rotate() 的 彈跳問題
+
+當指針繞一圈回到 0 時，因為角度從 300 多度回到 0 度會導致指針往回繞一圈，造成奇怪的效果。
+
+```css
+.no-transition {
+	transition: none;
+}
+```
+
+```js
+if (secondsDegrees == 0) {
+	secondHand.classList.add("no-transition");
+} else {
+	secondHand.classList.remove("no-transition");
+}
+secondHand.style.transform = `rotate(${secondsDegrees}deg)`;
+```
+
+設定後，當角度為 0 時，取消動畫即可解決彈跳問題。
+
+### 指針頓挫感
+
+```css
+.hand {
+	width: 50%;
+	height: 6px;
+	background: black;
+	position: absolute;
+	top: 50%;
+	transform-origin: 100%;
+	transform: rotate(90deg);
+	transition: all 0.05s;
+	transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);
+}
+```
+
+這裡的 transition-timing-function: cubic-bezier() 可以自定義讓指針產生模擬真實世界中時鐘跳動的效果。
+
+transform-origin 設為 100%則是讓指針位置在鐘面的中心點。
+
+> 參考：[MDN-easing-function](https://developer.mozilla.org/en-US/docs/Web/CSS/easing-function)
+
+### 秒針、分針、時針的設計
+
+```css
+.second-hand {
+	height: 2px;
+	background: #c11f1f;
+}
+
+.min-hand {
+	height: 3px;
+	width: 45%;
+	margin-left: 5%;
+}
+
+.hour-hand {
+	height: 4.5px;
+	width: 30%;
+	margin-left: 20%;
+}
+```
+
+秒針改為紅色，另外時針與分針的長度也有做出調整。
+
+### 總結
+
+處理秒針彈跳問題，比想像中棘手，但時鐘做出來的效果非常的漂亮，也成功模擬了現實中時針彈跳的感覺。

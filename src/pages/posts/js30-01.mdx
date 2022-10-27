@@ -1,0 +1,51 @@
+---
+layout: "@/layouts/BlogPost"
+title: JS 30 challenge - 01 心得
+publishDate: 26 Oct 2022
+description: Drum Kit
+tags: ["JavaScript", "practice"]
+---
+
+import { Image } from "@astrojs/image/components";
+
+## Demo & Github
+
+[[DEMO]](https://evan-js-drum-kit.netlify.app/)  
+[[Github]](https://github.com/evanyang0612/01_Java-Script-Drum-Kit)
+
+### HTMLmediaElement(audio)：
+
+HTML 的`audio`標籤，在 HTML 放置如下標籤指定音源
+
+```
+<audio src="sound/a.mp3"></audio>
+```
+
+透過 javascript 來操作：
+
+`element.play()`:進行播放
+
+`element.currentTime`:指定播放秒數
+
+範例中使用`currentTime`是為了達到連發的效果，這邊設定為 0，每次擊發時都會 reset 秒數。
+
+> 參考：[MDN-HTMLMediaElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement)
+
+### transitionend
+
+```js
+function removeTransition(e) {
+	if (e.propertyName !== "transform") return; // skip it if it's not a transform
+	this.classList.remove("playing");
+}
+const keys = Array.from(document.querySelectorAll(".key"));
+keys.forEach((key) => key.addEventListener("transitionend", removeTransition));
+```
+
+這邊搭配 CSS 裡的 transition，監聽 transitionend，達到在動畫結束後停止播放的作用，否則動畫會一直停留在畫面上。
+
+> 參考：[MDN-Event reference](https://developer.mozilla.org/en-US/docs/Web/Events)
+
+## 總結
+
+DOM 操作這塊 Vanilla JS 還是比 React 麻煩許多，因為 JSX 的特性允許直接在 HTML 上操作，會來得更為直覺一些，但沒想到這個挑戰讓自己意識到 DOM 操作的部分還有很多不熟悉的地方需要加強。
