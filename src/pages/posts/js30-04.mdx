@@ -1,0 +1,65 @@
+---
+layout: "@/layouts/BlogPost"
+title: JS 30 challenge - 05 心得
+publishDate: 30 Oct 2022
+description: Flex Panel Gallery
+tags: ["JavaScript", "practice", "CSS"]
+---
+
+import { Image } from "@astrojs/image/components";
+
+## Demo & Github
+
+[DEMO]
+[Github]
+
+### e.propertyName & includes()
+
+js
+const panels = document.querySelectorAll(".panel");
+
+function toggleOpen() {
+this.classList.toggle("open");
+}
+
+function toggleActive(e) {
+if (e.propertyName.includes("flex")) {
+this.classList.toggle("open-active");
+}
+}
+panels.forEach((panel) => panel.addEventListener("click", toggleOpen));
+panels.forEach((panel) =>
+panel.addEventListener("transitionend", toggleActive)
+);
+
+css
+.panel > \*:first-child {
+transform: translateY(-100%);
+}
+
+.panel.open-active > \*:first-child {
+transform: translateY(0);
+}
+
+.panel > \*:last-child {
+transform: translateY(100%);
+}
+
+.panel.open-active > \*:last-child {
+transform: translateY(0%);
+}
+
+.panel.open {
+flex: 5;
+font-size: 40px;
+}
+
+可以看到是在動畫結束(transitionend)後才去執行 toggle-Active，因此會先看到 open 的效果後，才會看到 open-active 的效果產生。
+
+因`.open`中觸發的`transition`屬性有兩個，分別為`font`與`flex`
+
+要使其在`flex`之後在觸發的話，就要判斷進來的是不是`flex`  
+但因為`transition: flex 0.7s..`這段在 sarafi 是`flex`，而其他瀏覽器為`flex-grow`
+所以不能用`e.property === 'flex'`來寫，會使其中一方瀏覽器抓不到值。
+
+作者提到因為兩者都有 flex 的字眼，所以利用`.includes('flex')來判斷， 只要`e.property`有包含到 flex 的字串就使其通過判斷，加入動畫效果。
