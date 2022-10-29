@@ -10,49 +10,51 @@ import { Image } from "@astrojs/image/components";
 
 ## Demo & Github
 
-[DEMO]
-[Github]
+[DEMO] (https://evan-05-flex-panel-gallery.netlify.app/)
+[Github] (https://github.com/evanyang0612/JS30-05-Flex_Panel_Gallery)
 
 ### e.propertyName & includes()
 
-js
+```js
 const panels = document.querySelectorAll(".panel");
 
 function toggleOpen() {
-this.classList.toggle("open");
+	this.classList.toggle("open");
 }
 
 function toggleActive(e) {
-if (e.propertyName.includes("flex")) {
-this.classList.toggle("open-active");
-}
+	if (e.propertyName.includes("flex")) {
+		this.classList.toggle("open-active");
+	}
 }
 panels.forEach((panel) => panel.addEventListener("click", toggleOpen));
 panels.forEach((panel) =>
-panel.addEventListener("transitionend", toggleActive)
+	panel.addEventListener("transitionend", toggleActive)
 );
+```
 
-css
+```css
 .panel > \*:first-child {
-transform: translateY(-100%);
+	transform: translateY(-100%);
 }
 
 .panel.open-active > \*:first-child {
-transform: translateY(0);
+	transform: translateY(0);
 }
 
 .panel > \*:last-child {
-transform: translateY(100%);
+	transform: translateY(100%);
 }
 
 .panel.open-active > \*:last-child {
-transform: translateY(0%);
+	transform: translateY(0%);
 }
 
 .panel.open {
-flex: 5;
-font-size: 40px;
+	flex: 5;
+	font-size: 40px;
 }
+```
 
 可以看到是在動畫結束(transitionend)後才去執行 toggle-Active，因此會先看到 open 的效果後，才會看到 open-active 的效果產生。
 

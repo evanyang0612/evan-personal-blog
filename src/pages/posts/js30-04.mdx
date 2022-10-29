@@ -1,65 +1,191 @@
 ---
 layout: "@/layouts/BlogPost"
-title: JS 30 challenge - 05 心得
-publishDate: 30 Oct 2022
+title: JS 30 challenge - 04 心得
+publishDate: 29 Oct 2022
 description: Flex Panel Gallery
-tags: ["JavaScript", "practice", "CSS"]
+tags: ["JavaScript", "practice",]
 ---
 
 import { Image } from "@astrojs/image/components";
 
 ## Demo & Github
 
-[DEMO]
-[Github]
+[DEMO] (https://evan-array-cardio-day1.netlify.app/)
+[Github] (https://github.com/evanyang0612/JS30-04-Array-Cardio-Day-1)
 
-### e.propertyName & includes()
+### **1. filter()**
 
-js
-const panels = document.querySelectorAll(".panel");
+題目：篩選出於 1500~1599 年間出生的 inventor(year in 1500-1599)  
+解答：透過`fifter()`對來源做篩選，會將結果為`true`的資料組成陣列回傳
 
-function toggleOpen() {
-this.classList.toggle("open");
-}
-
-function toggleActive(e) {
-if (e.propertyName.includes("flex")) {
-this.classList.toggle("open-active");
-}
-}
-panels.forEach((panel) => panel.addEventListener("click", toggleOpen));
-panels.forEach((panel) =>
-panel.addEventListener("transitionend", toggleActive)
+```javascript
+const fifteen = inventors.filter(function (inventor) {
+	if ((inventor.year >= 1500) & (inventor.year <= 1600)) {
+		return true;
+	}
+});
+//可簡化為arrow function
+const fifteen = inventors.filter(
+	(inventor) => (inventor.year >= 1500) & (inventor.year <= 1600)
 );
+```
 
-css
-.panel > \*:first-child {
-transform: translateY(-100%);
+> 參閱：[MDN-Array.prototype.filter()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter)
+
+### **2. map()**
+
+題目：將 inventors 內的 first 與 last 組合成一個陣列  
+解答：透過`map`來將 firstName/lastNam 組合返回陣列
+
+```javascript
+const fullNames = inventors.map(
+	(inventor) => `${inventor.first} ${inventor.last}`
+);
+console.log(fullNames);
+```
+
+> 參閱：[MDN-Array.prototype.map()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map)
+
+### **3. sort()**
+
+題目：依據生日由大至小排序所有的 inventor  
+解答：透過`sort()`來做排序
+
+```javascript
+const ordered = inventors.sort(function (a, b) {
+	if (a.year > b.year) {
+		return 1;
+	} else {
+		return -1;
+	}
+});
+//利用箭頭函式及三元運算式可簡寫如下
+const ordered = inventors.sort((a, b) => (a.year > b.year ? 1 : -1));
+```
+
+> 若比對的值相同要依據原排序的話，要再加上一個`return 0`的判斷使其保持原排序  
+> 參閱：[MDN-Array.prototype.sort()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort)
+
+### **4. reduce()**
+
+題目：加總所有 inventor 的在世時間  
+解答：要加總的話，用以前的寫法會寫這樣
+
+```javascript
+let totalYears = 0;
+for (let i = 0; i < inventors.length; i++) {
+	let liveYear = inventors[i].passed - inventors[i].year;
+	totalYears += liveYear;
 }
+```
 
-.panel.open-active > \*:first-child {
-transform: translateY(0);
-}
+如果利用`reduce()`搭配箭頭函式如下：
 
-.panel > \*:last-child {
-transform: translateY(100%);
-}
+```javascript
+const totalYears = inventors.reduce((total, inventor) => {
+	return total + (inventor.passed - inventor.year);
+}, 0);
+```
 
-.panel.open-active > \*:last-child {
-transform: translateY(0%);
-}
+`redice()`的 callback 有四個參數：
 
-.panel.open {
-flex: 5;
-font-size: 40px;
-}
+1. 初始值
+2. 陣列中正在處理的元素
+3. 陣列中正在處理的元素的索引值（好饒舌ＸＤ）
+4. 使用 reduce 的陣列
+   及一個預設值(會再第一次執行時賦予第一個參數設定的值。
 
-可以看到是在動畫結束(transitionend)後才去執行 toggle-Active，因此會先看到 open 的效果後，才會看到 open-active 的效果產生。
+所以用這個答案來看，在第一次執行時預設值賦予了`total=0`  
+接著每次讀取陣列元素時對其計算在世時間並加回 total 中。
 
-因`.open`中觸發的`transition`屬性有兩個，分別為`font`與`flex`
+> 參閱：[MDN-Array.prototype.reduce()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce)
 
-要使其在`flex`之後在觸發的話，就要判斷進來的是不是`flex`  
-但因為`transition: flex 0.7s..`這段在 sarafi 是`flex`，而其他瀏覽器為`flex-grow`
-所以不能用`e.property === 'flex'`來寫，會使其中一方瀏覽器抓不到值。
+### **5. sort()**
 
-作者提到因為兩者都有 flex 的字眼，所以利用`.includes('flex')來判斷， 只要`e.property`有包含到 flex 的字串就使其通過判斷，加入動畫效果。
+題目：依據年齡由大至小排序所有的 inventor。  
+解答：排序原理同第三題，多了一段計算年齡的部分而已
+
+```javascript
+const oldest = inventors.sort(function (a, b) {
+	const lastInventor = a.passed - a.year;
+	const nextInventor = b.passed - b.year;
+	return lastInventor > nextInventor ? -1 : 1;
+});
+```
+
+### **6. map() + filter() & includes()**
+
+題目：列出 wiki 中巴黎所有包含'de'的路名
+解答：
+
+```javascript
+const category = document.querySelector(".mw-category");
+const links = Array.from(category.querySelectorAll("a"));
+const de = links
+	.map((link) => link.textContent)
+	.filter((streetName) => streetName.includes("de"));
+```
+
+這題先用`querySelectorAll()`來選取對象元件，  
+再利用之前[第一個練習](https://github.com/guahsu/JavaScript30/tree/master/01_Java-Script-Drum-Kit)有提到的 Array.from 將 nodeList 轉為 Array，  
+才能對其進行 map 操作(map 是 Array 的方法，nodeList 沒有)，  
+同時加上`filter`+`includes`來做文字的篩選，若存在’de’就回傳 true 加入陣列。
+
+> 參閱：[MDN-Array.prototype.includes()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/includes)
+
+### **7. sort() & split()**
+
+題目：依據 lastName 排序所有 people 的資料
+解答：
+
+```javascript
+const alpha = people.sort((lastOne, nextOne) => {
+	const [aLast, aFirst] = lastOne.split(", ");
+	const [bLast, bFirst] = nextOne.split(", ");
+	return aLast > bLast ? 1 : -1;
+});
+```
+
+由於 people 的資料都是`['Beck, Glenn’]`這樣的逗點字串，  
+要取得 lastName 就必須要使用`split()`來切開，  
+滿酷的是因為`split()`會返回陣列，所以宣告了陣列`[aLast, aFirst]`來接值  
+接著再利用接到的值來做排序比對。
+
+> 參閱：[MDN-String.prototype.split()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/split)
+
+### **8. reduce()**
+
+題目：分別計算 data 內每個種類的數量  
+解答：
+
+```javascript
+const data = [
+	"car",
+	"car",
+	"truck",
+	"truck",
+	"bike",
+	"walk",
+	"car",
+	"van",
+	"bike",
+	"walk",
+	"car",
+	"van",
+	"car",
+	"truck",
+	"pogostick",
+];
+
+const transportation = data.reduce(function (obj, item) {
+	if (!obj[item]) {
+		obj[item] = 0;
+	}
+	obj[item]++;
+	return obj;
+}, {});
+```
+
+這題的做法真的很厲害啊！  
+首先利用預設值將`reduce()`的第一個參數設定為空物件`obj={}`  
+接著做一個判斷來決定建立物件內容或著使已建立內容累加總數!
