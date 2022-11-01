@@ -1,0 +1,43 @@
+---
+layout: "@/layouts/BlogPost"
+title: JS 30 challenge - 07 心得
+publishDate: 01 Nov 2022
+description: Array Cardio Day2
+tags: ["JavaScript", "practice"]
+---
+
+import { Image } from "@astrojs/image/components";
+
+## Demo & Github
+
+[DEMO](https://array-cardio-two.netlify.app/)
+[Github](https://github.com/evanyang0612/JS30-07-Array_Cardio_Day_2)
+
+### find & findIndex
+
+```js
+const comments = [
+	{ text: "Love this!", id: 523423 },
+	{ text: "Super good", id: 823423 },
+	{ text: "You are the best", id: 2039842 },
+	{ text: "Ramen is my fav food ever", id: 123523 },
+	{ text: "Nice Nice Nice!", id: 542328 },
+];
+```
+
+Array.prototype.find()類似 filter，但他是回傳尋找的值
+
+```js
+const find823423 = comments.find((comment) => comment.id === 823423);
+console.log(find823423);
+```
+
+Array.prototype.findIndex()則是回傳尋找的 index，
+
+```
+    const index = comments.findIndex(comment => comment.id === 823423)
+    comments.splice(index, 1)
+    console.table(comments)
+```
+
+id 823423 是 comments 的第二個值，所以回傳的 index 為 1

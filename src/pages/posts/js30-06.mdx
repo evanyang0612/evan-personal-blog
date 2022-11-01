@@ -1,0 +1,43 @@
+---
+layout: "@/layouts/BlogPost"
+title: JS 30 challenge - 06 心得
+publishDate: 31 Oct 2022
+description: Flex Panel Gallery
+tags: ["JavaScript", "practice", "CSS"]
+---
+
+import { Image } from "@astrojs/image/components";
+
+## Demo & Github
+
+[DEMO](https://js30-type-ahead.netlify.app/)
+[Github](https://github.com/evanyang0612/JS30-06-Type_Ahead)
+
+### Regex
+
+Regex 全名 Regular Expression (正規表達式)
+
+正規表達式非常複雜，也是我目前還不熟悉的一塊，昨天有發現一個學習平台，決定有空時好好了解一下。
+
+> 學習平台：[RegexLearn](https://regexlearn.com/)
+> 參閱：[Regular expressions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions)
+
+```js
+function findMatches(wordToMatch, cities) {
+	return cities.filter((place) => {
+		// here we need to figure out if the city or state matches what was searched
+		const regex = new RegExp(wordToMatch, "gi");
+		return place.city.match(regex) || place.state.match(regex);
+	});
+}
+```
+
+這裡`const regex = new RegExp(wordToMatch, "gi")`是要讓使用者不管輸入大小寫都能找到相對應的城市與州。
+
+```js
+function numberWithCommas(x) {
+	return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+```
+
+以每三個 0 為單位劃出逗號，例如 12345678 => 12,345,678
