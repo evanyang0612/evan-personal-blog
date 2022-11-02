@@ -1,0 +1,45 @@
+---
+layout: "@/layouts/BlogPost"
+title: JS 30 challenge - 08 心得
+publishDate: 02 Nov 2022
+description: Fun with HTML5 Canvas
+tags: ["JavaScript", "practice", "HTML"]
+---
+
+import { Image } from "@astrojs/image/components";
+
+## Demo & Github
+
+[DEMO](https://js30-fun-with-html5-canvas.netlify.app/)
+[Github](https://github.com/evanyang0612/JS30-08-Fun_With_HTML5_Canvas)
+
+### getContext('2d')
+
+HTML5 的 Canvas 標籤很簡單，他只有兩個屬性跟兩個方法：
+
+- width
+- height
+- getContext()
+- toDataURL()
+
+其中`getContext()`是為了讓使用者能在 Canvas 上作畫。
+
+> 參閱：[HTMLCanvasElement.getContext()](https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/getContext)
+
+### Canvas API
+
+練習當中有用到的屬性，詳細程式碼可參閱 Github 連結。
+
+```js
+ctx.strokeStyle = "#BADA55";
+ctx.lineJoin = "round";
+ctx.lineCap = "round";
+ctx.lineWidth = 100;
+ctx.beginPath();
+ctx.moveTo(lastX, lastY);
+ctx.lineTo(e.offsetX, e.offsetY);
+ctx.stroke();
+[lastX, lastY] = [e.offsetX, e.offsetY];
+```
+
+> 參閱：[Canvas API](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API)
