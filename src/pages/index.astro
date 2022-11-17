@@ -10,7 +10,7 @@ const meta = {
 	description: "The perfect starter for your perfect blog.",
 };
 
-const MAX_POSTS = 10;
+const MAX_POSTS = 5;
 const allPosts = await Astro.glob<Post>("./posts/*.mdx");
 const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 ---
@@ -19,7 +19,7 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 	<section>
 		<h1 class="mb-6 title">Hi, I'm Fei</h1>
 		<p class="mb-4">
-			Hi, 我是Fei Yang.<br />
+			Hi, 我是Evan Yang.<br />
 			我是一名前端開發者，目前在前端領域已經學習六個月，主要使用的框架為React。<br
 			/>會開始這個部落格主要想分享我在前端領域上的心得，以及我自己個人的心情以及感想抒發。<br
 			/>
