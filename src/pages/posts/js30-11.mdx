@@ -1,0 +1,65 @@
+---
+layout: "@/layouts/BlogPost"
+title: JS 30 challenge - 11 心得
+publishDate: 15 Nov 2022
+description: Custom Video Player
+tags: ["JavaScript", "practice", "HTML", "CSS"]
+---
+
+import { Image } from "@astrojs/image/components";
+
+## Demo & Github
+
+[DEMO](https://js30-11-custom-video-player.netlify.app/)
+
+### 全螢幕
+
+```js
+function handleFullScreen() {
+	if (video.requestFullscreen) {
+		video.requestFullscreen();
+	}
+}
+```
+
+另外去 font-awesome 中找尋全螢幕的 icon 放到 html 中，
+記得要在 head 中插入 link
+
+```html
+<link
+	href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css"
+	rel="stylesheet"
+/>
+```
+
+```html
+<button class="player__button fullscreen">
+	<i class="icon-fullscreen"></i>
+</button>
+```
+
+當使用者點擊時，就會達到全螢幕的效果，另外瀏覽器有預設的全螢幕效果，所以不需要另外設定退出全螢幕的 Code。
+
+###鍵盤偵測
+
+```js
+function eventKeydown(e) {
+	switch (e.keyCode) {
+		//whit space
+		case 32:
+			togglePlay();
+			break;
+		//key left
+		case 37:
+			video.currentTime -= 15;
+			break;
+		//key right
+		case 39:
+			video.currentTime += 30;
+			break;
+	}
+}
+document.addEventListener("keydown", eventKeydown);
+```
+
+這邊讓空白鍵可以切換播放功能，並且左右鍵可以快轉或倒退影片。

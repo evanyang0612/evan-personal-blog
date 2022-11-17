@@ -28,7 +28,7 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 		<SocialList />
 	</section>
 	<section aria-label="Blog post list" class="mt-16">
-		<h2 class="mb-4 text-xl title">Posts</h2>
+		<h2 class="mb-4 text-2xl title">Posts</h2>
 		<ul class="space-y-4 sm:space-y-2">
 			{
 				allPostsByDate.map((p) => (
@@ -40,51 +40,52 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 		</ul>
 	</section>
 	<section class="mt-16">
-		<h2 class="mb-4 text-xl title">Technologies</h2>
-		<ul class="space-y-4 sm:space-y-2">
+		<h2 class="mb-4 text-2xl title">Portfolio</h2>
+		<ul class="space-y-8 sm:space-y-8">
 			<li>
 				<a
-					href="https://astro.build"
+					href="https://react-moviehub.netlify.app/"
 					target="_blank"
 					rel="noopener noreferrer"
-					class="inline-block cactus-link"
-					>Astro
-				</a>:
-				<p class="inline-block sm:mt-2">Build fast websites, faster.</p>
-			</li>
-			<li>
-				<a
-					href="https://docs.astro.build/en/guides/integrations-guide/image/"
-					target="_blank"
-					rel="noopener noreferrer"
-					class="inline-block cactus-link"
-					>@astro/image
-				</a>:
+					class="inline-block cactus-link text-lg font-bold"
+					>MovieHub
+				</a>
 				<p class="inline-block sm:mt-2">
-					An Astro integration for optimising images in Astro projects.
+					MovieHub WebApp that access movies from the TMDB Database API and
+					search movies and rent online. Users are not only able to search
+					movies, they can also add to favorite and put it into shopping cart.
+					Furthermore, they can even change the language (we support English,
+					Japanese and Chinese) based on their preference.
 				</p>
 			</li>
 			<li>
 				<a
-					href="https://tailwindcss.com"
+					href="https://myanimehub.netlify.app/"
 					target="_blank"
 					rel="noopener noreferrer"
-					class="inline-block cactus-link"
-					>Tailwind CSS
-				</a>:
+					class="inline-block cactus-link text-lg font-bold"
+					>AnimeHub
+				</a>
 				<p class="inline-block sm:mt-2">
-					Rapidly build modern websites without ever leaving your HTML.
+					Anime WebApp that access details from the Jikan API which developed
+					base on the most famous anime community MyAnimeList. Users can easily
+					get access to the anime they're interested in and get more specific
+					details of anime by clicking the image or the title of anime.
 				</p>
 			</li>
 			<li>
 				<a
-					href="https://mdxjs.com/"
+					href="https://evan-quizzical.netlify.app/"
 					target="_blank"
 					rel="noopener noreferrer"
-					class="inline-block cactus-link"
-					>MDX
-				</a>:
-				<p class="inline-block sm:mt-2">Markdown for the component era.</p>
+					class="inline-block cactus-link text-lg font-bold"
+					>Quizzical
+				</a>
+				<p class="inline-block sm:mt-2">
+					Quiz WebApp that access trivia questions from the Open Trivia Database
+					API and score players based on their answers. Multiple game options
+					like difficulty and category are available for the player to change.
+				</p>
 			</li>
 		</ul>
 	</section>

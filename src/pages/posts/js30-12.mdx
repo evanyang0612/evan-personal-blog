@@ -1,0 +1,32 @@
+---
+layout: "@/layouts/BlogPost"
+title: JS 30 challenge - 12 心得
+publishDate: 16 Nov 2022
+description: Key Sequence Detection
+tags: ["JavaScript", "practice"]
+---
+
+import { Image } from "@astrojs/image/components";
+
+## Demo & Github
+
+[DEMO](https://js30-12.netlify.app/)
+
+### SecretCode
+
+我這邊將 SecretCode 設定為自己的 last name 也就是 Evan
+
+```js
+const pressed = [];
+const secretCode = "evan";
+window.addEventListener("keyup", (e) => {
+	pressed.push(e.key);
+	pressed.splice(-secretCode.length - 1, pressed.length - secretCode.length);
+	if (pressed.join("").toLowerCase().includes(secretCode)) {
+		cornify_add();
+	}
+});
+```
+
+並且用 toLowerCase()轉換字串，讓使用者不論大小寫都可以達到輸入密碼的效果。
+程式碼會去偵測使用者所輸入的倒數四個字母是否符合 secretCode，如符合的話則會顯示特效。

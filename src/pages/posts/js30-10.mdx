@@ -1,0 +1,28 @@
+---
+layout: "@/layouts/BlogPost"
+title: JS 30 challenge - 10 心得
+publishDate: 14 Nov 2022
+description: Hold Shift and Check Checkboxes
+tags: ["JavaScript", "practice", "HTML"]
+---
+
+import { Image } from "@astrojs/image/components";
+
+## Demo & Github
+
+[DEMO](https://js30-10.netlify.app/)
+
+### Steps
+
+1. 基本設定<br/>
+   用 querySelectorAll('.inbox input[type="checkbox"]來把 HTML 中的 checkbox 選起來，
+   並設置一個變數 let lastChecked;作為稍後勾選位置的紀錄使用。
+
+2. 觸發設定<br/>
+   把所有選取的 checkboxes 使用 forEach 來加入 addEventListener('click', handelCheck)。
+
+3. handelCheck<br/>
+   在這個 function 裡面，建立了一個區域變數 let inBetween = false 來當作選取區間的標記，
+   並在每次觸發時檢查是否”有按著 shift 點擊”if(e.shiftKey && this.checked)，
+   若有的話則再跑一次 forEach 來透過 inBetween 對每個 checkbox 進行區間標記，
+   把屬於區間內的 checkbox 勾起來，並記錄此次點擊的位置。
