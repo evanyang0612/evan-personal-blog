@@ -1,0 +1,108 @@
+---
+layout: "@/layouts/BlogPost"
+title: JS 30 challenge - 14 心得
+publishDate: 18 Nov 2022
+description: JavaScript Reference VS Copy
+tags: ["JavaScript", "practice"]
+---
+
+import { Image } from "@astrojs/image/components";
+
+## Demo & Github
+
+[DEMO](https://js30-14.netlify.app/)
+
+### 前言
+
+JS 中，資料的型別主要分為「基本型別(primitive type)」以及「物件(object)」
+
+兩者最大的差異在於
+
+- Primitive type data 複製變數時，會直接「 複製值 (value) 」。像是：string、number、boolean、undefined、null、symbol 的變數資料。
+- Object data 複製變數時，會「 複製地址 (address) 」。像是：object、array、function 的變數資料。
+
+概念如下圖
+
+![](https://www.programfarmer.com/article/javaScript/javascript-shallow-copy-deep-copy/01.png)
+
+### 基本型別與物件
+
+```js
+let age = 100;
+let age2 = age;
+age = 200;
+console.log(age, age2);
+```
+
+這邊 console 的結果為(200,100)。
+也就是即便 age 被重新附值，age2 一樣是等於前值的 100，因為 age2 複製的是值，而不是地址。
+
+然而
+當我們今天面臨到陣列或是物件時情況就不同了
+
+```js
+const players = ["Wes", "Sarah", "Ryan", "Poppy"];
+const team = players;
+team[3] = "Lux";
+console.log(players);
+```
+
+這邊 console 的結果會是[['Wes', 'Sarah', 'Ryan', 'Lux']
+不僅是 team 被改變，原本的 players 也會一同被改變，why? 因為他們兩者為同一個地址，指向同個值。
+
+要怎麼解決這個問題呢?
+
+### 淺拷貝(shallow copy)與深拷貝(deep copy)
+
+作者提到可以用
+
+```js
+const team2 = players.slice();
+const team3 = [].concat(players);
+const team4 = [...players];
+const team5 = Array.from(players);
+```
+
+等方式來達到陣列的拷貝。
+
+那 Object(物件)的拷貝呢?
+物件的拷貝更為複雜，分為淺拷貝與深拷貝，why?
+物件若為兩層以上，將必須要使用深拷貝。
+
+```js
+const wes ={
+  name='Wes',
+  age:100,
+  social:{
+    twitter:'@wesbos',
+    facebook:'wesbos.developer'
+  }
+
+const dev = {...wes}
+dev.social.twitter = '@evan'
+console.log(wes)
+}
+```
+
+這邊 console 的結果會看到 wes.socail.twitter 已經被改成'@evan'了
+淺拷貝並沒有辦法派上用場。
+
+因此我們可以使用深拷貝(deep copy)
+
+有三種方式可以使用
+
+- clonedeep()
+- JSON.parse(JSON.stringify(object))
+- Recursive deepCopyFunction
+
+這邊作者推薦的方式是第二種
+
+```js
+const dev2 = JSON.parse(JSON.stringify(wes));
+```
+
+這種方式讓原本的 object 轉化為 string，所以可以避免第二層被改變的問題。
+
+> 參考：[JS 中的淺拷貝 (Shallow copy) 與深拷貝 (Deep copy) 原理與實作](https://www.programfarmer.com/articles/javaScript/javascript-shallow-copy-deep-copy)
+
+> 參考：[如何写出一个惊艳面试官的深拷贝?](https://juejin.cn/post/6844903929705136141#heading-6)
