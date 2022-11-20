@@ -1,0 +1,61 @@
+---
+layout: "@/layouts/BlogPost"
+title: JS 30 challenge - 15 心得
+publishDate: 18 Nov 2022
+description: LocalStorage
+tags: ["JavaScript", "practice"]
+---
+
+import { Image } from "@astrojs/image/components";
+
+## Demo & Github
+
+[DEMO](https://js30-15.netlify.app/)
+
+### ternary operator 三元運算子
+
+```js
+
+      const item = {
+        text,
+        done: false,
+      }
+
+${plate.done ? 'checked' : ''}
+```
+
+這邊將 item 設為 object 後，賦予 done 的 initial value 是 false,
+所以後面在座條件判斷時，用 done 的 boolean 值去判斷 css 的呈現。
+
+```css
+.plates input + label:before {
+	content: "⬜️";
+	margin-right: 10px;
+}
+
+.plates input:checked + label:before {
+	content: "🌮";
+}
+```
+
+當 checked 屬性被賦予時，將會呈現出墨西哥捲 🌮 的圖案。
+
+### LocalStorage
+
+在每次 items 中的內容有被變動時，都會使用 localStorage 去做儲存。
+
+```js
+localStorage.setItem("items", JSON.stringify(items));
+```
+
+並且如果重新整理畫面的話，將可以使用
+
+```js
+const items = JSON.parse(localStorage.getItem("items")) || [];
+```
+
+將儲存在 localStorage 裡面的 string 重新 parse 成 object 的格式。
+
+### 小結
+
+使用 vanilla JavaScript 去做 DOM 的操作的確沒有使用框架 React 來得順手，需要更多練習才能駕輕就熟。

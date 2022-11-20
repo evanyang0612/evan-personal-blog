@@ -17,7 +17,7 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 
 <PageLayout meta={meta}>
 	<section>
-		<h1 class="mb-6 title">Hi, I'm Fei</h1>
+		<h1 class="mb-6 title">Hi, I'm Evan</h1>
 		<p class="mb-4">
 			Hi, 我是Evan Yang.<br />
 			我是一名前端開發者，目前在前端領域已經學習六個月，主要使用的框架為React。<br
@@ -28,7 +28,7 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 		<SocialList />
 	</section>
 	<section aria-label="Blog post list" class="mt-16">
-		<h2 class="mb-4 text-2xl title">Posts</h2>
+		<h2 class="mb-4 text-2xl title">Latest Posts</h2>
 		<ul class="space-y-4 sm:space-y-2">
 			{
 				allPostsByDate.map((p) => (
