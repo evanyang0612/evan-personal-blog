@@ -1,0 +1,96 @@
+---
+layout: "@/layouts/BlogPost"
+title: Alpha Camp 畢業專案心得
+publishDate: 17 Jan 2023
+description: Experience
+tags: ["bootcamp", "project"]
+---
+
+import { Image } from "@astrojs/image/components";
+
+## Demo & Github
+
+[DEMO](https://s339428326.github.io/AlphaCamp-Twitter/)
+[Github](https://github.com/s339428326/AlphaCamp-Twitter)
+
+## 前言
+
+在我先前自我學習的過程中，沒有機會有他人協作的經驗，也沒有助教給予回饋，加入 AlphaCamp 是我第一次有這樣的機會。而我很其他學員不同的是，我在 11 月才加入學期三，其他很多學員是學期一就開始加入。
+不得不說，大家都很認真，也很樂於分享。雖然 AlphaCamp 的學費不斐，但是我認為所獲得的經驗算相當值得。
+
+## 感謝
+
+首先很感謝 Lucy 願意擔任我們專案的統籌角色，很負責任地叮嚀大家該注意的事項，以及注意大家的每天的進度。
+Stanley 願意加入團隊，並且在前端開發有任何問題的時候，都很願意提供協助。
+Shorty 負責主要後端的 API 開發，並且在串接上有任何問題隨時都在線上。
+Benson 負責部分後端 API 的製作以及 DEMO 工作。
+
+實在很感謝小組中這麼多人的幫忙，才能夠在短短不到兩周的時間，完成一個這樣精美的專案，
+並且在評鑑當中獲得良好的成績。
+
+## 學習到以及使用的技術
+
+在開發過程中，我們使用了`moment.js`對時間進行處理和格式化。
+
+```js
+import moment from "moment";
+
+const momentFormat = (createdAt) => {
+	moment.updateLocale("zh-tw", {
+		longDateFormat: {
+			LL: "M月D日",
+		},
+	});
+	const date = new Date(createdAt);
+	const currentTime = Date.now();
+	const timeDifference = currentTime - date.getTime();
+
+	let outcome = moment(date).format("LL");
+
+	if (timeDifference < 3600000) {
+		if (timeDifference < 60000) {
+			outcome = "幾秒前";
+		} else {
+			const minutes = Math.floor(timeDifference / 60000);
+			outcome = `${minutes}分鐘前`;
+		}
+	} else if (timeDifference < 86400000) {
+		const hours = Math.floor(timeDifference / 3600000);
+		outcome = `${hours}小時前`;
+	}
+	return outcome;
+};
+
+export default momentFormat;
+```
+
+也採用了 Regex 去做帳號、密碼以及 Email 的驗證
+
+```js
+export const validAccount = new RegExp(/(^$)|^[a-z0-9_]{1,50}$/);
+export const validPassword = new RegExp(/(^$)|^[a-z0-9]{1,50}$/);
+export const validEmail = new RegExp(
+	/(^$)|[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/
+);
+```
+
+**更學到了 http methods 的 put、post 以及 patch 的差異**
+
+PUT: 此方法用於更新服務器上的現有資源。它將資源的整個表示與請求中發送的新表示替換。它是冪等的，這意味著多次發送相同的請求具有與單次請求相同的效果。
+
+PATCH: 此方法用於部分更新服務器上的現有資源。它僅更新請求中指定的字段，並保留其他字段不變。它不是冪等的，這意味著多次發送相同的請求可能不具有與單次請求相同的效果。
+
+POST: 此方法用於在服務器上創建新資源。它不是冪等的，這意味著多次發送相同的請求將創建多個資源。
+
+一般來說，當您要完全替換資源時應使用 PUT，當您只想對資源進行小的更改時應使用 PATCH，當您要創建新資源時應使用 POST。
+
+重要的是要注意，並非所有 API 都支持這些方法，這取決於 API 的體系結構和設計。
+
+## Git Flow
+
+在版本控制當中，我們會先到 main branch 將最新的進度 pull 下來，再 checkout 到自己的 feature branch 去做開發，開發完成後 push 上去，並且發 pull request 請其他組員進行 code review。
+在過往我個人 side-project 的開發經驗當中，還沒有創建過 branch、merge 的經驗，這樣的經驗讓我學習到很多版本控制以及與他人協作開發上的流程。
+
+## 結語
+
+在這次的專案中，我學習到了開發的流程，以及如何找尋適當的工具來解決問題，再次感謝開發路上一起同心協力的夥伴們，沒有你們就不會有這麼好的結果。
